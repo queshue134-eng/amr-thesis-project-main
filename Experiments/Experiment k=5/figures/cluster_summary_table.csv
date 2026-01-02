@@ -1,0 +1,6 @@
+Cluster,N Isolates,Species Composition,MDR %,Top Resistant Antibiotics,Major Region,Major Barangay,Major Environment,Major Source,Barangay by Region
+C1,23,Salmonella species (100.0%),4.3%,"AN, CN, GM",Region III - Central Luzon (73.9%),Alegria (56.5%),Water (69.6%),Drinking Water (43.5%),BARMM: Dayawan (100%); CLZ: Alegria (53%); EVS: Alegria (100%)
+C2,93,Enterobacter cloacae (71.0%); Enterobacter aerogenes (21.5%); Escherichia coli (3.2%),2.2%,"AM, CF, CN",Region III - Central Luzon (52.7%),Roque (34.4%),Fish (53.8%),Drinking Water (24.7%),BARMM: K (69%); CLZ: Roque (53%); EVS: Alegria (80%)
+C3,123,Escherichia coli (77.2%); Klebsiella pneumoniae (22.0%); Enterobacter aerogenes (0.8%),53.7%,"TE, DO, AM",BARMM (53.7%),Alegria (26.0%),Fish (56.1%),Fish Tilapia (22.0%),BARMM: K (42%); CLZ: Alegria (55%); EVS: Alegria (58%)
+C4,104,Escherichia coli (98.1%); Klebsiella pneumoniae (1.9%),0.0%,"CF, C, CFT",BARMM (54.8%),Alegria (20.2%),Fish (58.7%),Fish Tilapia (23.1%),BARMM: APMC (33%); CLZ: Gabriel (40%); EVS: Alegria (50%)
+C5,148,Klebsiella pneumoniae (79.1%); Escherichia coli (18.2%); Enterobacter cloacae (1.4%),0.7%,"AM, FT, CN",BARMM (58.1%),Roque (24.3%),Fish (58.8%),Fish Tilapia (25.0%),BARMM: K (35%); CLZ: Gabriel (49%); EVS: Alegria (70%)

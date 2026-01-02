@@ -1,0 +1,4 @@
+Test,Chi-Square,p-value,Degrees of Freedom,Cramers V,Effect Size,Significant
+Cluster vs Region,77.80249656273729,1.0153556625631613e-14,6,0.28147577439455707,Small association,True
+Cluster vs Environment,32.49538979041481,1.3110079899355127e-05,6,0.18190939585357163,Small association,True
+Cluster vs Species,942.7073826076867,2.5370707736460585e-191,15,0.7999946463702768,Large association,True

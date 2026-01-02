@@ -1,0 +1,124 @@
+======================================================================
+DATA CLEANING REPORT - FORMAL MISSING DATA STRATEGY
+======================================================================
+
+Generated: 2025-12-29 09:44:04
+
+METHODOLOGY SUMMARY
+--------------------------------------------------
+This report documents all cleaning actions performed as part of a
+transparent, defensible missing data methodology.
+
+THRESHOLDS APPLIED
+--------------------------------------------------
+  Minimum antibiotic test coverage: 70.0%
+  Maximum isolate missing data: 30.0%
+
+DATA RETENTION SUMMARY
+--------------------------------------------------
+  Initial isolates: 583
+  Duplicates removed: 2
+  Isolates removed (missing data): 90
+  Final isolates: 491
+  Retention rate: 84.2%
+
+VALIDATION SUMMARY
+--------------------------------------------------
+  Total invalid values found: 580
+
+ANTIBIOTIC TEST COVERAGE
+--------------------------------------------------
+  Retained (21): AM, AMC, AN, C, CF, CFO, CFT, CN, CPD, CTX, CZA, DO, ENR, FT, GM, IPM, MRB, N, PRA, SXT, TE
+  Excluded (9): ORIGINAL_SPECIES, AMI, CFA, CFV, CPT, CTF, GEN, IME, MAR
+
+  Coverage by Antibiotic:
+    GM: 89.8% (522/581) [RETAINED]
+    IPM: 89.8% (522/581) [RETAINED]
+    MRB: 89.7% (521/581) [RETAINED]
+    AN: 89.5% (520/581) [RETAINED]
+    CFO: 89.3% (519/581) [RETAINED]
+    C: 89.0% (517/581) [RETAINED]
+    CFT: 89.0% (517/581) [RETAINED]
+    ENR: 89.0% (517/581) [RETAINED]
+    SXT: 89.0% (517/581) [RETAINED]
+    TE: 89.0% (517/581) [RETAINED]
+    AMC: 86.9% (505/581) [RETAINED]
+    DO: 85.4% (496/581) [RETAINED]
+    FT: 84.7% (492/581) [RETAINED]
+    CF: 84.5% (491/581) [RETAINED]
+    CPD: 84.5% (491/581) [RETAINED]
+    PRA: 84.5% (491/581) [RETAINED]
+    N: 84.2% (489/581) [RETAINED]
+    CN: 83.8% (487/581) [RETAINED]
+    CZA: 82.4% (479/581) [RETAINED]
+    CTX: 79.7% (463/581) [RETAINED]
+    AM: 73.1% (425/581) [RETAINED]
+    CPT: 69.0% (401/581) [EXCLUDED]
+    AMI: 0.2% (1/581) [EXCLUDED]
+    CFA: 0.2% (1/581) [EXCLUDED]
+    CFV: 0.2% (1/581) [EXCLUDED]
+    CTF: 0.2% (1/581) [EXCLUDED]
+    GEN: 0.2% (1/581) [EXCLUDED]
+    IME: 0.2% (1/581) [EXCLUDED]
+    MAR: 0.2% (1/581) [EXCLUDED]
+    ORIGINAL_SPECIES: 0.0% (0/581) [EXCLUDED]
+
+EXCLUSION SUMMARY TABLE
+--------------------------------------------------
+  Excluded Antibiotics (insufficient coverage):
+    - ORIGINAL_SPECIES: 0.0% coverage
+    - AMI: 0.2% coverage
+    - CFA: 0.2% coverage
+    - CFV: 0.2% coverage
+    - CPT: 69.0% coverage
+    - CTF: 0.2% coverage
+    - GEN: 0.2% coverage
+    - IME: 0.2% coverage
+    - MAR: 0.2% coverage
+
+  Excluded Isolates (excessive missing data):
+    Total: 90 isolates
+    - EC_MAEWUR1C25: 100.0% missing
+    - EC_MAEWUR2C3: 100.0% missing
+    - EC_MAEWUR2C13: 100.0% missing
+    - EC_MAEWUR2C25: 100.0% missing
+    - EC_MAEWUR2C27: 100.0% missing
+    - EC_MAEWUR2C29: 100.0% missing
+    - EC_MAEWUR3C8: 100.0% missing
+    - EC_MAEWUR3C21: 100.0% missing
+    - EC_MAEWUR3C25: 100.0% missing
+    - EC_MAEWUR3C26: 100.0% missing
+    ... and 80 more
+
+MISSING DATA BY ANTIBIOTIC (After Cleaning)
+--------------------------------------------------
+  GM: 10.2% missing (89.8% complete)
+  IPM: 10.2% missing (89.8% complete)
+  MRB: 10.3% missing (89.7% complete)
+  AN: 10.5% missing (89.5% complete)
+  CFO: 10.7% missing (89.3% complete)
+  C: 11.0% missing (89.0% complete)
+  CFT: 11.0% missing (89.0% complete)
+  ENR: 11.0% missing (89.0% complete)
+  SXT: 11.0% missing (89.0% complete)
+  TE: 11.0% missing (89.0% complete)
+  AMC: 13.1% missing (86.9% complete)
+  DO: 14.6% missing (85.4% complete)
+  FT: 15.3% missing (84.7% complete)
+  CF: 15.5% missing (84.5% complete)
+  CPD: 15.5% missing (84.5% complete)
+  PRA: 15.5% missing (84.5% complete)
+  N: 15.8% missing (84.2% complete)
+  CN: 16.2% missing (83.8% complete)
+  CZA: 17.6% missing (82.4% complete)
+  CTX: 20.3% missing (79.7% complete)
+  AM: 26.9% missing (73.1% complete)
+
+CLEANING ACTIONS LOG
+--------------------------------------------------
+  Values standardized: 0
+  Invalid values nullified: 580
+
+======================================================================
+END OF REPORT
+======================================================================

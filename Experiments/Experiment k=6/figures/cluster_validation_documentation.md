@@ -1,0 +1,1 @@
+Optimal k=4 selected using combined elbow + silhouette analysis. Elbow point at k=4 indicates diminishing returns in cluster cohesion beyond this point. At k=4, silhouette score is 0.4659 (indicating strong cluster structure) with WCSS=1482.9. This balances statistical cluster quality with interpretability and sample size stability.
