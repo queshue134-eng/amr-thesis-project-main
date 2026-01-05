@@ -1,0 +1,7 @@
+CV,Model,F1_Mean,F1_Std,Accuracy
+5-fold,Logistic Regression,0.989,0.009,0.99
+5-fold,Random Forest,0.989,0.011,0.994
+5-fold,KNN,0.979,0.009,0.978
+10-fold,Logistic Regression,0.989,0.015,0.99
+10-fold,Random Forest,0.986,0.027,0.994
+10-fold,KNN,0.982,0.015,0.982

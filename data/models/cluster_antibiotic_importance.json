@@ -1,0 +1,222 @@
+[
+  {
+    "Antibiotic": "TE",
+    "Class": "Tetracyclines",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.2411,
+    "Importance_Level": "High",
+    "Resistance_Rate": "24.2%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CF",
+    "Class": "Cephalosporins-1st",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.1799,
+    "Importance_Level": "High",
+    "Resistance_Rate": "26.5%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "AMC",
+    "Class": "BL/BLI combinations",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.1572,
+    "Importance_Level": "High",
+    "Resistance_Rate": "18.5%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "DO",
+    "Class": "Tetracyclines",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.1549,
+    "Importance_Level": "Moderate",
+    "Resistance_Rate": "21.6%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CN",
+    "Class": "Cephalosporins-1st",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0568,
+    "Importance_Level": "Moderate",
+    "Resistance_Rate": "33.6%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "SXT",
+    "Class": "Folate pathway inhibitors",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0411,
+    "Importance_Level": "Moderate",
+    "Resistance_Rate": "11.6%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "AN",
+    "Class": "Aminoglycosides",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0374,
+    "Importance_Level": "Moderate",
+    "Resistance_Rate": "4.7%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "GM",
+    "Class": "Aminoglycosides",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0296,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "4.9%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "C",
+    "Class": "Phenicols",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0207,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "7.7%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "AM",
+    "Class": "Penicillins",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0189,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "46.8%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "FT",
+    "Class": "Nitrofurans",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0153,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "2.4%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "ENR",
+    "Class": "Fluoroquinolones",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0129,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "0.6%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CFO",
+    "Class": "Cephamycins",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0112,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "2.9%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CFT",
+    "Class": "Cephalosporins-3rd/4th",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0081,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "4.7%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CPD",
+    "Class": "Cephalosporins-3rd/4th",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0065,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "1.6%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "PRA",
+    "Class": "BL/BLI combinations",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0044,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "0.6%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "IPM",
+    "Class": "Carbapenems",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0026,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "0.4%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CPT",
+    "Class": "Cephalosporins-3rd/4th",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0012,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "0.8%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "MRB",
+    "Class": "Carbapenems",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0001,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "0.4%",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "N",
+    "Class": "Aminoglycosides",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "N/A",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CTX",
+    "Class": "Cephalosporins-3rd/4th",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "N/A",
+    "Task": "CLUSTER"
+  },
+  {
+    "Antibiotic": "CZA",
+    "Class": "Cephalosporin/BLI",
+    "Model": "Random Forest",
+    "Method": "Gini Importance",
+    "Importance_Score": 0.0,
+    "Importance_Level": "Low",
+    "Resistance_Rate": "N/A",
+    "Task": "CLUSTER"
+  }
+]

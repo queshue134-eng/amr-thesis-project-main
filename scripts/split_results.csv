@@ -1,0 +1,10 @@
+Split,Model,F1_Mean,F1_Std,Accuracy
+70/30,Logistic Regression,0.984,0.006,0.985
+70/30,Random Forest,0.984,0.014,0.993
+70/30,KNN,0.979,0.01,0.977
+80/20,Logistic Regression,0.987,0.005,0.986
+80/20,Random Forest,0.982,0.022,0.994
+80/20,KNN,0.984,0.012,0.982
+90/10,Logistic Regression,0.992,0.01,0.992
+90/10,Random Forest,0.96,0.05,0.988
+90/10,KNN,0.989,0.01,0.988

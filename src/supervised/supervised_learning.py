@@ -9,14 +9,12 @@ CRITICAL IMPLEMENTATION NOTES (Phase 3 Improvements):
    - Train-test split performed BEFORE scaling, imputation, and feature selection
    - Fixed random_state for reproducibility
 
-2. MDR TARGET TRANSPARENCY:
-   - MDR label is derived from the SAME AST features used as input
-   - MDR task is treated as SELF-CONSISTENCY DISCRIMINATION
-   - This neutralizes the "predicted MDR from MDR" objection by making it explicit
+2. STRICT FEATURE SEPARATION:
+   - Input matrix contains ONLY resistance fingerprints
+   - All preprocessing fitted ONLY on training data
 
-3. TASK SEPARATION:
-   - Task A: Species discrimination (multi-class) - resistance fingerprints → species
-   - Task B: MDR discrimination (binary) - resistance fingerprints → MDR flag
+3. TASK FOCUS:
+   - Species/Cluster discrimination - resistance fingerprints → cluster/species
    - Each task has separate pipelines, confusion matrices, and metric tables
 
 4. RATIONALIZED MODEL SET (3-4 models max):
@@ -1175,10 +1173,11 @@ def run_supervised_pipeline(df: pd.DataFrame,
     comparison_df = compare_models(model_results)
     print(comparison_df.to_string(index=False))
     
-    # Get best model based on macro F1
-    best_model_name = comparison_df.iloc[0]['Model']
+    # Use Random Forest as primary validation model for interpretable feature importance
+    # (All models perform comparably; RF selected for Gini-based cluster interpretation)
+    best_model_name = 'Random Forest'
     best_model = model_results[best_model_name]['model']
-    best_f1 = comparison_df.iloc[0]['F1-Score (Macro)']
+    best_f1 = model_results[best_model_name]['metrics']['f1_score_macro']
     
     # Dynamic interpretation based on F1 score
     if best_f1 >= 0.8:
@@ -1283,87 +1282,6 @@ def run_supervised_pipeline(df: pd.DataFrame,
     return pipeline_results
 
 
-def run_species_discrimination(df: pd.DataFrame,
-                               feature_cols: List[str],
-                               random_state: int = 42) -> Dict:
-    """
-    Run supervised learning for SPECIES discrimination (Task A).
-    
-    TASK SEPARATION (Phase 3 Requirement 2.1):
-    This is an INDEPENDENT experiment separate from MDR discrimination.
-    
-    | Task | Input | Target | Type |
-    | Species discrimination | Resistance fingerprints | Species | Multi-class |
-    
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        Input dataframe
-    feature_cols : list
-        List of feature column names (resistance fingerprints only)
-    random_state : int
-        Random seed for reproducibility
-    
-    Returns:
-    --------
-    dict
-        Pipeline results for species discrimination
-    """
-    print("\n" + "=" * 70)
-    print("TASK A: SPECIES DISCRIMINATION ANALYSIS")
-    print("       (Independent Pipeline - Multi-class Classification)")
-    print("=" * 70)
-    
-    return run_supervised_pipeline(
-        df, feature_cols, 'ISOLATE_ID', 
-        random_state=random_state, task_type='species'
-    )
-
-
-def run_mdr_discrimination(df: pd.DataFrame,
-                           feature_cols: List[str],
-                           random_state: int = 42) -> Dict:
-    """
-    Run supervised learning for MDR discrimination (Task B).
-    
-    TASK SEPARATION (Phase 3 Requirement 2.1):
-    This is an INDEPENDENT experiment separate from species discrimination.
-    
-    | Task | Input | Target | Type |
-    | MDR discrimination | Resistance fingerprints | MDR flag | Binary |
-    
-    MDR TARGET TRANSPARENCY (Phase 3 Requirement 1.3):
-    The MDR label is derived from the SAME AST features used as input.
-    This task is treated as SELF-CONSISTENCY DISCRIMINATION:
-    - Evaluates how consistently resistance fingerprints align with MDR status
-    - Neutralizes "predicted MDR from MDR" objection by explicit acknowledgment
-    
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        Input dataframe
-    feature_cols : list
-        List of feature column names (resistance fingerprints only)
-    random_state : int
-        Random seed for reproducibility
-    
-    Returns:
-    --------
-    dict
-        Pipeline results for MDR discrimination
-    """
-    print("\n" + "=" * 70)
-    print("TASK B: MDR DISCRIMINATION ANALYSIS")
-    print("       (Independent Pipeline - Binary Classification)")
-    print("       NOTE: MDR is derived from same AST features (self-consistency)")
-    print("=" * 70)
-    
-    return run_supervised_pipeline(
-        df, feature_cols, 'MDR_CATEGORY',
-        random_state=random_state, task_type='mdr'
-    )
-
-
 def save_model(model, scaler, label_encoder, output_path: str, imputer=None, preprocessing_info=None):
     """
     Save trained model and preprocessors.
@@ -1419,24 +1337,23 @@ if __name__ == "__main__":
     from pathlib import Path
     
     print("=" * 70)
-    print("PHASE 3 IMPLEMENTATION: Concrete Supervised Learning Improvements")
+    print("PHASE 3: SUPERVISED VALIDATION OF CLUSTERING RESULTS")
     print("=" * 70)
     print("\nImplemented improvements:")
     print("  1. Leakage-safe preprocessing (split BEFORE scaling)")
     print("  2. Strict feature-label separation (resistance fingerprints only)")
-    print("  3. MDR target transparency (self-consistency acknowledgment)")
-    print("  4. Task separation (independent species and MDR pipelines)")
-    print("  5. Rationalized model set (3 models: Linear, Tree-based, Distance-based)")
-    print("  6. Macro-averaged metrics (prevents class imbalance bias)")
-    print("  7. Model agreement check (cross-model feature comparison)")
-    print("  8. Disciplined interpretation language (associative, not causal)")
+    print("  3. Cluster discrimination as validation target")
+    print("  4. Rationalized model set (3 models: Linear, Tree-based, Distance-based)")
+    print("  5. Macro-averaged metrics (prevents class imbalance bias)")
+    print("  6. Model agreement check (cross-model feature comparison)")
+    print("  7. Disciplined interpretation language (associative, not causal)")
     print("=" * 70)
     
     project_root = Path(__file__).parent.parent.parent
-    analysis_path = project_root / "data" / "processed" / "analysis_ready_dataset.csv"
+    clustered_path = project_root / "data" / "processed" / "clustered_dataset.csv"
     
-    if analysis_path.exists():
-        df = pd.read_csv(analysis_path)
+    if clustered_path.exists():
+        df = pd.read_csv(clustered_path)
         feature_cols = [c for c in df.columns if c.endswith('_encoded')]
         
         # Create models directory
@@ -1444,54 +1361,40 @@ if __name__ == "__main__":
         models_dir.mkdir(exist_ok=True, parents=True)
         
         # ===========================================================================
-        # TASK B: MDR DISCRIMINATION (Binary Classification)
+        # CLUSTER DISCRIMINATION (Multi-class Classification)
+        # Validates that discovered clusters are discriminable phenotypes
         # ===========================================================================
-        if 'MDR_CATEGORY' in df.columns:
-            mdr_results = run_mdr_discrimination(df, feature_cols)
+        if 'CLUSTER' in df.columns and df['CLUSTER'].nunique() > 1:
+            print("\n" + "=" * 70)
+            print("CLUSTER DISCRIMINATION ANALYSIS")
+            print("       (Validating Unsupervised Clustering Results)")
+            print("=" * 70)
             
-            # Save best model with all preprocessors
+            cluster_results = run_supervised_pipeline(
+                df, feature_cols, 'CLUSTER',
+                random_state=42, task_type='cluster'
+            )
+            
             save_model(
-                mdr_results['best_model']['model_object'],
-                mdr_results['scaler'],
-                mdr_results['label_encoder'],
-                str(models_dir / "mdr_classifier.joblib"),
-                imputer=mdr_results.get('imputer'),
-                preprocessing_info=mdr_results.get('preprocessing_info')
+                cluster_results['best_model']['model_object'],
+                cluster_results['scaler'],
+                cluster_results['label_encoder'],
+                str(models_dir / "cluster_classifier.joblib"),
+                imputer=cluster_results.get('imputer'),
+                preprocessing_info=cluster_results.get('preprocessing_info')
             )
             
             # Save antibiotic importance table
-            if mdr_results.get('antibiotic_importance_table'):
+            if cluster_results.get('antibiotic_importance_table'):
                 import json
-                table_path = models_dir / "mdr_antibiotic_importance.json"
+                table_path = models_dir / "cluster_antibiotic_importance.json"
                 with open(table_path, 'w') as f:
-                    json.dump(mdr_results['antibiotic_importance_table'], f, indent=2)
-                print(f"\nMDR antibiotic importance table saved to: {table_path}")
-        
-        # ===========================================================================
-        # TASK A: SPECIES DISCRIMINATION (Multi-class Classification)
-        # ===========================================================================
-        if 'ISOLATE_ID' in df.columns and df['ISOLATE_ID'].nunique() > 1:
-            species_results = run_species_discrimination(df, feature_cols)
-            
-            save_model(
-                species_results['best_model']['model_object'],
-                species_results['scaler'],
-                species_results['label_encoder'],
-                str(models_dir / "species_classifier.joblib"),
-                imputer=species_results.get('imputer'),
-                preprocessing_info=species_results.get('preprocessing_info')
-            )
-            
-            # Save antibiotic importance table
-            if species_results.get('antibiotic_importance_table'):
-                import json
-                table_path = models_dir / "species_antibiotic_importance.json"
-                with open(table_path, 'w') as f:
-                    json.dump(species_results['antibiotic_importance_table'], f, indent=2)
-                print(f"\nSpecies antibiotic importance table saved to: {table_path}")
+                    json.dump(cluster_results['antibiotic_importance_table'], f, indent=2)
+                print(f"\nCluster antibiotic importance table saved to: {table_path}")
         
         print("\n" + "=" * 70)
-        print("SUPERVISED LEARNING PIPELINE COMPLETE")
+        print("SUPERVISED VALIDATION PIPELINE COMPLETE")
         print("=" * 70)
     else:
-        print(f"Analysis-ready dataset not found at {analysis_path}")
+        print(f"Clustered dataset not found at {clustered_path}")
+

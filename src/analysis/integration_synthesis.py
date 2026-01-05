@@ -202,8 +202,8 @@ def define_integration_framework() -> Dict:
                 'type': 'supervised',
                 'description': 'Identifies features that discriminate between categories',
                 'key_results': [
+                    'Cluster discrimination performance',
                     'Species classification performance',
-                    'MDR classification performance',
                     'Feature importance rankings',
                     'Confusion matrices for classification'
                 ]
@@ -384,7 +384,7 @@ def generate_cluster_supervised_alignment_table(
     Generate Cluster × Supervised Performance Mapping table.
 
     Creates a table linking clusters to supervised discrimination strength:
-    | Cluster | Dominant species | MDR % | Species discrimination | MDR discrimination |
+    | Cluster | Dominant species | MDR % | Species discrimination |
 
     Uses confusion matrices concepts from Phase 3 to identify:
     - Clusters that are consistently classified
@@ -435,8 +435,7 @@ def generate_cluster_supervised_alignment_table(
             'Size': cluster_size,
             'Dominant_Species': None,
             'MDR_Percent': None,
-            'Species_Discrimination': None,
-            'MDR_Discrimination': None
+            'Species_Discrimination': None
         }
 
         # Dominant species and species discrimination assessment
@@ -461,20 +460,10 @@ def generate_cluster_supervised_alignment_table(
                     "heterogeneous resistance phenotype"
                 )
 
-        # MDR percentage and MDR discrimination assessment
+        # MDR percentage (descriptive, not classification target)
         if mdr_flag_col in cluster_df.columns:
             mdr_rate = cluster_df[mdr_flag_col].mean()
             row['MDR_Percent'] = round(mdr_rate * 100, 1)
-
-            # MDR discrimination based on deviation from 50% (pure MDR or non-MDR)
-            mdr_purity = max(mdr_rate, 1 - mdr_rate)
-            row['MDR_Discrimination'] = _categorize_discrimination_strength(mdr_purity)
-
-            if mdr_purity >= 0.8:
-                mdr_label = 'MDR' if mdr_rate > 0.5 else 'non-MDR'
-                interpretation['agreement'].append(
-                    f"Cluster {cluster} is predominantly {mdr_label} ({row['MDR_Percent']}% MDR)"
-                )
 
         alignment_rows.append(row)
 
