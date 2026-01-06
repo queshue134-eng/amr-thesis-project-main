@@ -1,0 +1,57 @@
+﻿================================================================================
+MANUSCRIPT VS CODEBASE VERIFICATION REPORT
+================================================================================
+
+1. TOTAL ISOLATES
+python : Traceback 
+(most recent call 
+last):
+At line:1 char:1
++ python 
+verify_manuscript.py 
+2>&1 | Out-File 
+-Encoding utf8 
+verificati ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (Traceback    
+ (most recent call    
+ last)::String) [    
+], RemoteExceptio    n
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  File "C:\Users\quesh
+\Downloads\amr-thesis-
+project-main-v3.3\amr_
+thesis_project_code\ve
+rify_manuscript.py", 
+line 27, in <module>
+    print(f"   MATCH: 
+Claimed={claimed_n}, 
+Actual={actual_n} 
+\u2713")
+    ~~~~~^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\quesh
+\AppData\Local\Python\
+pythoncore-3.14-64\Lib
+\encodings\cp1252.py",
+ line 19, in encode
+    return codecs.char
+map_encode(input,self.
+errors,encoding_table)
+[0]
+           ~~~~~~~~~~~
+~~~~~~~~~~^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 
+'charmap' codec can't 
+encode character 
+'\u2713' in position 
+34: character maps to 
+<undefined>

@@ -736,7 +736,7 @@ def run_analyze():
     df_clustered = pd.read_csv(clustered_path)
     feature_cols = [c for c in df_clustered.columns if c.endswith('_encoded')]
     
-    analysis_results = {'regional': False, 'integration': False, 'species': False}
+    analysis_results = {'regional': False, 'integration': False, 'cluster': False}
     
     # Step 1: Regional & Environmental Analysis
     step_time = console.step("Regional & Environmental Analysis", "Analyzing geographic distribution patterns")
@@ -764,31 +764,46 @@ def run_analyze():
     except Exception as e:
         console.error(f"Integration synthesis failed: {e}")
     
-    # Step 3: Supervised Learning (Species Discrimination)
-    step_time = console.step("Species Discrimination", "Training species classifier with ML")
+    # Step 3: Supervised Learning (Cluster Discrimination)
+    step_time = console.step("Cluster Discrimination", "Validating clusters with ML classifier")
     try:
-        from supervised.supervised_learning import run_species_discrimination, save_model
+        from supervised.supervised_learning import run_supervised_pipeline, save_model
         
-        if 'ISOLATE_ID' in df_clustered.columns and df_clustered['ISOLATE_ID'].nunique() > 1:
+        if 'CLUSTER' in df_clustered.columns and df_clustered['CLUSTER'].nunique() > 1:
             with redirect_stdout(devnull):
-                species_results = run_species_discrimination(df_clustered, feature_cols)
+                cluster_results = run_supervised_pipeline(
+                    df_clustered, feature_cols, 'CLUSTER', task_type='cluster'
+                )
             
-            # Save model
+            # Save classifier model
             with redirect_stdout(devnull):
                 save_model(
-                    species_results['best_model']['model_object'],
-                    species_results['scaler'],
-                    species_results['label_encoder'],
-                    str(MODELS_DIR / 'species_classifier.joblib'),
-                    imputer=species_results.get('imputer'),
-                    preprocessing_info=species_results.get('preprocessing_info')
+                    cluster_results['best_model']['model_object'],
+                    cluster_results['scaler'],
+                    cluster_results['label_encoder'],
+                    str(MODELS_DIR / 'cluster_classifier.joblib'),
+                    imputer=cluster_results.get('imputer'),
+                    preprocessing_info=cluster_results.get('preprocessing_info')
                 )
-            analysis_results['species'] = True
-            console.step_complete(step_time, "Species classifier trained and saved")
+            
+            # Save importance table
+            import json
+            if cluster_results.get('antibiotic_importance_table'):
+                table_path = MODELS_DIR / "cluster_antibiotic_importance.json"
+                with open(table_path, 'w') as f:
+                    json.dump(cluster_results['antibiotic_importance_table'], f, indent=2)
+
+            # Save full metrics for manuscript verification (as text to avoid numpy json issues)
+            metrics_path = MODELS_DIR / "cluster_metrics.txt"
+            with open(metrics_path, 'w') as f:
+                f.write(str(cluster_results['model_results']))
+
+            analysis_results['cluster'] = True # Re-using key to report success
+            console.step_complete(step_time, "Cluster classifier trained and saved")
         else:
-            console.warning("Insufficient species diversity for discrimination analysis")
+            console.warning("Insufficient cluster diversity for discrimination analysis")
     except Exception as e:
-        console.error(f"Species discrimination failed: {e}")
+        console.error(f"Cluster discrimination failed: {e}")
     
     # Phase complete
     success_count = sum(analysis_results.values())

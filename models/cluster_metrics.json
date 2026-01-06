@@ -1,0 +1,333 @@
+{
+  "Logistic Regression": {
+    "accuracy": 0.98989898989899,
+    "precision_macro": 0.9951923076923077,
+    "recall_macro": 0.99,
+    "f1_score_macro": 0.9924707747176541,
+    "precision_weighted": 0.9900932400932402,
+    "recall_weighted": 0.98989898989899,
+    "f1_score_weighted": 0.9898449523969635,
+    "confusion_matrix": [
+      [
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        19,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        24,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        51
+      ]
+    ],
+    "class_labels": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "class_names": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "classification_report": {
+      "1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4.0
+      },
+      "2": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 19.0
+      },
+      "3": {
+        "precision": 1.0,
+        "recall": 0.96,
+        "f1-score": 0.9795918367346939,
+        "support": 25.0
+      },
+      "4": {
+        "precision": 0.9807692307692307,
+        "recall": 1.0,
+        "f1-score": 0.9902912621359223,
+        "support": 51.0
+      },
+      "accuracy": 0.98989898989899,
+      "macro avg": {
+        "precision": 0.9951923076923077,
+        "recall": 0.99,
+        "f1-score": 0.9924707747176541,
+        "support": 99.0
+      },
+      "weighted avg": {
+        "precision": 0.9900932400932402,
+        "recall": 0.98989898989899,
+        "f1-score": 0.9898449523969635,
+        "support": 99.0
+      }
+    },
+    "model_name": "Logistic Regression",
+    "model_category": "Linear",
+    "model_description": "Linear baseline with coefficient interpretation",
+    "feature_importance": {
+      "scores": {
+        "CF": 0.9866433098085574,
+        "TE": 0.8591766946779291,
+        "DO": 0.7194301771289103,
+        "CN": 0.4219334302440584,
+        "AMC": 0.4155950279885175,
+        "AN": 0.35798018757743577,
+        "GM": 0.34733221033154904,
+        "SXT": 0.34061618067202376,
+        "AM": 0.23459026206614308,
+        "C": 0.22402976113411563,
+        "CPD": 0.16151118073163068,
+        "FT": 0.13297842392796205,
+        "CPT": 0.1287815425584022,
+        "IPM": 0.11176337278529966,
+        "CFO": 0.11029822006549331,
+        "PRA": 0.1099510868432983,
+        "CFT": 0.10467531385765858,
+        "ENR": 0.06982979563978929,
+        "MRB": 0.002564839247069515,
+        "N": 0.002543897062737814,
+        "CTX": 0.0,
+        "CZA": 0.0
+      },
+      "method": "Absolute coefficient magnitude",
+      "model_type": "Logistic Regression",
+      "interpretation_note": "ASSOCIATIVE importance - does not imply causation"
+    }
+  },
+  "Random Forest": {
+    "accuracy": 0.98989898989899,
+    "precision_macro": 0.9951923076923077,
+    "recall_macro": 0.9375,
+    "f1_score_macro": 0.9618585298196949,
+    "precision_weighted": 0.9900932400932402,
+    "recall_weighted": 0.98989898989899,
+    "f1_score_weighted": 0.9892265232071058,
+    "confusion_matrix": [
+      [
+        3,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        19,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        25,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        51
+      ]
+    ],
+    "class_labels": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "class_names": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "classification_report": {
+      "1": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1-score": 0.8571428571428571,
+        "support": 4.0
+      },
+      "2": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 19.0
+      },
+      "3": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 25.0
+      },
+      "4": {
+        "precision": 0.9807692307692307,
+        "recall": 1.0,
+        "f1-score": 0.9902912621359223,
+        "support": 51.0
+      },
+      "accuracy": 0.98989898989899,
+      "macro avg": {
+        "precision": 0.9951923076923077,
+        "recall": 0.9375,
+        "f1-score": 0.9618585298196949,
+        "support": 99.0
+      },
+      "weighted avg": {
+        "precision": 0.9900932400932402,
+        "recall": 0.98989898989899,
+        "f1-score": 0.9892265232071058,
+        "support": 99.0
+      }
+    },
+    "model_name": "Random Forest",
+    "model_category": "Tree-based",
+    "model_description": "Nonlinear model with Gini feature importance",
+    "feature_importance": {
+      "scores": {
+        "TE": 0.24110907913668278,
+        "CF": 0.17985699890174128,
+        "AMC": 0.15722072169012458,
+        "DO": 0.15493868716081632,
+        "CN": 0.05683251554561841,
+        "SXT": 0.04106201935573497,
+        "AN": 0.03744443472730481,
+        "GM": 0.02964172095305214,
+        "C": 0.02067962818551369,
+        "AM": 0.018850576756402854,
+        "FT": 0.015259210478893661,
+        "ENR": 0.0129447879077887,
+        "CFO": 0.011247598925433054,
+        "CFT": 0.008134905064693419,
+        "CPD": 0.006521464481549598,
+        "PRA": 0.004443704804174799,
+        "IPM": 0.002576333671228429,
+        "CPT": 0.0011582919623927968,
+        "MRB": 7.500076458193397e-05,
+        "N": 2.3195262718654463e-06,
+        "CTX": 0.0,
+        "CZA": 0.0
+      },
+      "method": "Gini importance (mean decrease in impurity)",
+      "model_type": "Random Forest",
+      "interpretation_note": "ASSOCIATIVE importance - does not imply causation"
+    }
+  },
+  "k-Nearest Neighbors": {
+    "accuracy": 0.9797979797979798,
+    "precision_macro": 0.9905660377358491,
+    "recall_macro": 0.98,
+    "f1_score_macro": 0.9847756410256411,
+    "precision_weighted": 0.9805603201829617,
+    "recall_weighted": 0.9797979797979798,
+    "f1_score_weighted": 0.9795713545713546,
+    "confusion_matrix": [
+      [
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        19,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        23,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        51
+      ]
+    ],
+    "class_labels": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "class_names": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "classification_report": {
+      "1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4.0
+      },
+      "2": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 19.0
+      },
+      "3": {
+        "precision": 1.0,
+        "recall": 0.92,
+        "f1-score": 0.9583333333333334,
+        "support": 25.0
+      },
+      "4": {
+        "precision": 0.9622641509433962,
+        "recall": 1.0,
+        "f1-score": 0.9807692307692307,
+        "support": 51.0
+      },
+      "accuracy": 0.9797979797979798,
+      "macro avg": {
+        "precision": 0.9905660377358491,
+        "recall": 0.98,
+        "f1-score": 0.9847756410256411,
+        "support": 99.0
+      },
+      "weighted avg": {
+        "precision": 0.9805603201829617,
+        "recall": 0.9797979797979798,
+        "f1-score": 0.9795713545713546,
+        "support": 99.0
+      }
+    },
+    "model_name": "k-Nearest Neighbors",
+    "model_category": "Distance-based",
+    "model_description": "Distance-based consistency check",
+    "feature_importance": {
+      "scores": {},
+      "method": "No native feature importance available",
+      "model_type": "k-Nearest Neighbors",
+      "interpretation_note": "ASSOCIATIVE importance - does not imply causation"
+    }
+  }
+}

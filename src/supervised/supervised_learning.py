@@ -1,71 +1,71 @@
 """
 Supervised Learning Module for AMR Thesis Project
-Phase 4 - Supervised Learning for Pattern Discrimination
+Phase 3 - Supervised Validation of Clustering Results
 
-CRITICAL IMPLEMENTATION NOTES (Phase 3 Improvements):
-=====================================================
+PURPOSE:
+========
+This module provides supervised learning validation of the unsupervised 
+hierarchical agglomerative clustering (HAC) results. The goal is to verify
+that the discovered clusters represent genuine, discriminable resistance 
+phenotypes rather than artifacts of the clustering algorithm.
+
+VALIDATION OBJECTIVE:
+=====================
+Cluster Discrimination - resistance fingerprints → cluster membership
+    - If clusters are biologically meaningful, a classifier should be able
+      to accurately predict cluster membership from resistance data alone
+    - High classification accuracy validates cluster distinctiveness
+    - Feature importance identifies which antibiotics drive cluster separation
+
+CRITICAL IMPLEMENTATION NOTES:
+==============================
 1. LEAKAGE-SAFE PIPELINE:
-   - Input matrix contains ONLY resistance fingerprints (no metadata like region, site, environment)
+   - Input matrix contains ONLY resistance fingerprints (no metadata)
    - Train-test split performed BEFORE scaling, imputation, and feature selection
    - Fixed random_state for reproducibility
 
 2. STRICT FEATURE SEPARATION:
-   - Input matrix contains ONLY resistance fingerprints
+   - Input matrix contains ONLY resistance fingerprints (_encoded columns)
    - All preprocessing fitted ONLY on training data
+   - No metadata (region, site, environment) enters the model
 
-3. TASK FOCUS:
-   - Species/Cluster discrimination - resistance fingerprints → cluster/species
-   - Each task has separate pipelines, confusion matrices, and metric tables
-
-4. RATIONALIZED MODEL SET (3-4 models max):
+3. RATIONALIZED MODEL SET (3 models max):
    - Logistic Regression → Linear baseline (coefficient magnitude for importance)
    - Random Forest → Nonlinear + feature importance (Gini importance)
    - k-Nearest Neighbors → Distance-based consistency check
-   - (Optional) SVM → Margin-based separation
 
-5. EVALUATION METRICS DISCIPLINE:
+4. EVALUATION METRICS DISCIPLINE:
    - Always report: Accuracy, Macro-averaged Precision/Recall/F1
    - Macro averaging prevents class imbalance bias
-   - Confusion matrix per task
+   - Confusion matrix per cluster
 
-6. INTERPRETATION LANGUAGE:
+5. INTERPRETATION LANGUAGE:
    - Use: "Shows consistent alignment", "Demonstrates discriminative capacity"
    - Avoid: "Performs well", "Predicts accurately"
    - Feature importance is ASSOCIATIVE, not CAUSAL
 
-OBJECTIVE (4.1):
-    Evaluate how well resistance fingerprints discriminate known categories:
-    - Task A: Bacterial species (multi-class classification)
-    - Task B: MDR vs non-MDR groups (binary classification)
-    Note: This is pattern discrimination, NOT forecasting/prediction of future outcomes.
-
-DATA SPLITTING (4.2):
+METHODOLOGY:
+============
+DATA SPLITTING:
     - 80%-20% train-test split BEFORE any preprocessing
     - Scaling applied separately to train/test after split (prevents leakage)
-    - Purpose: Assess model generalization, avoid overfitting, support robustness
-    - Framed as model validation, not prediction
+    - Purpose: Assess model generalization, validate cluster reproducibility
 
-MODEL SELECTION (4.3) - RATIONALIZED SET:
-    - Logistic Regression → Linear baseline
-    - Random Forest → Tree-based, feature importance
-    - k-Nearest Neighbors → Distance-based
-    Model groups: Linear, Tree-based, Distance-based
-
-MODEL TRAINING (4.4):
+MODEL TRAINING:
     - Inputs: Resistance fingerprints ONLY (encoded antibiotic susceptibility)
-    - Targets: Known labels (species or MDR category)
-    - NO metadata enters the model (region, site, environment excluded)
+    - Target: Cluster assignment from HAC
+    - NO metadata enters the model
 
-MODEL EVALUATION (4.5):
+MODEL EVALUATION:
     - Accuracy, Macro Precision, Macro Recall, Macro F1-score, Confusion matrix
-    - Interpretation: Metrics quantify how consistently resistance patterns
-      align with known categories, NOT predictive performance for future samples.
+    - Metrics quantify how consistently resistance patterns align with cluster
+      assignments (validates clustering quality)
 
-MODEL INTERPRETATION (4.6):
-    - Feature importance analysis identifies antibiotics contributing most
-      to group separation (ASSOCIATIVE importance, not causal)
+FEATURE IMPORTANCE:
+    - Identifies antibiotics contributing most to cluster separation
     - Random Forest: Gini importance
     - Logistic Regression: Absolute coefficient magnitude
+    - ASSOCIATIVE importance only - does not imply causation
 """
 
 import pandas as pd
@@ -690,16 +690,16 @@ def interpret_feature_importance(feature_importance: Dict,
     )
     
     # Task-specific interpretation
-    if task_type == 'mdr' or (target_col and 'MDR' in target_col.upper()):
+    # Task-specific interpretation
+    if task_type == 'mdr':
+         pass # Removed as MDR discrimination is no longer a focus
+    elif task_type == 'species':
+         pass # Removed as Species discrimination is no longer a focus
+    else:
+        # Default Cluster discrimination interpretation
         interpretation['interpretation_notes'].append(
-            "MDR TASK NOTE: For MDR discrimination, top features indicate antibiotics "
-            "whose resistance patterns show consistent alignment with MDR status. "
-            "This is a self-consistency check since MDR is derived from the same AST features."
-        )
-    elif task_type == 'species' or (target_col and target_col.upper() in ['ISOLATE_ID', 'SPECIES']):
-        interpretation['interpretation_notes'].append(
-            "SPECIES TASK NOTE: For species discrimination, top features indicate antibiotics "
-            "whose resistance patterns show consistent alignment with species identity."
+            "CLUSTER VALIDATION NOTE: Top features indicate antibiotics that most effectively "
+            "differentiate between the discovered resistance phenotypes."
         )
     
     # Compute resistance rates if dataframe is provided
@@ -1035,20 +1035,13 @@ def create_antibiotic_importance_table(results: Dict, df: pd.DataFrame, task_typ
                 importance_level = 'Low'
             
             # Task-specific interpretation
-            if task_type == 'mdr':
-                if importance_level == 'High':
-                    interpretation = 'Common MDR marker (high discriminative capacity)'
-                elif importance_level == 'Moderate':
-                    interpretation = 'Moderate MDR association'
-                else:
-                    interpretation = 'Low MDR discrimination'
-            else:  # species
-                if importance_level == 'High':
-                    interpretation = 'Species-specific resistance pattern'
-                elif importance_level == 'Moderate':
-                    interpretation = 'Moderate species association'
-                else:
-                    interpretation = 'Low species discrimination'
+            # Interpretation based on importance strength
+            if importance_level == 'High':
+                interpretation = 'Strong differentiator for resistance phenotypes'
+            elif importance_level == 'Moderate':
+                interpretation = 'Moderate contribution to phenotype separation'
+            else:
+                interpretation = 'Minor contribution to phenotype separation'
             
             importance_data.append({
                 'Antibiotic': antibiotic,
@@ -1113,31 +1106,17 @@ def run_supervised_pipeline(df: pd.DataFrame,
         Complete pipeline results with leakage-safe preprocessing info
     """
     print("=" * 70)
-    print("PHASE 4: Supervised Learning for Pattern Discrimination")
+    print("PHASE 3: Supervised Learning for Pattern Discrimination")
     print("        (Leakage-Safe Pipeline with Macro-Averaged Metrics)")
     print("=" * 70)
     
-    # Determine task type
+    # Default to cluster discrimination if not specified
     if task_type is None:
-        if 'MDR' in target_col.upper():
-            task_type = 'mdr'
-        else:
-            task_type = 'species'
+        task_type = 'cluster'
     
     print(f"\n1. TASK: {task_type.upper()} discrimination")
     print(f"   Target variable: {target_col}")
-    
-    # ===========================================================================
-    # MDR TARGET TRANSPARENCY (Phase 3 Requirement 1.3)
-    # ===========================================================================
-    if task_type == 'mdr':
-        print("\n   *** MDR TARGET TRANSPARENCY NOTE ***")
-        print("   MDR label is derived from the SAME AST features used as input.")
-        print("   This task evaluates SELF-CONSISTENCY DISCRIMINATION:")
-        print("   - How consistently do resistance fingerprints align with MDR status?")
-        print("   - This is NOT prediction; it's a pattern consistency check.")
-        print("   **************************************")
-    
+
     # Prepare data with LEAKAGE-SAFE preprocessing
     print(f"\n2. Preparing data (LEAKAGE-SAFE pipeline)...")
     print(f"   - random_state: {random_state} (fixed for reproducibility)")

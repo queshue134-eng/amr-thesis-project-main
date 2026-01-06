@@ -1,0 +1,21 @@
+RANDOM FOREST CLUSTER VALIDATION RESULTS
+==================================================
+Accuracy:           0.9878 (98.8%)
+Macro F1-Score:     0.9843
+Macro Precision:    0.9913
+Macro Recall:       0.9777
+Weighted Precision: 0.9879
+Weighted Recall:    0.9878
+
+TOP 10 FEATURE IMPORTANCES:
+----------------------------------------
+  TE  : 0.2600
+  DO  : 0.1564
+  CF  : 0.1371
+  AMC : 0.1113
+  AM  : 0.0752
+  CN  : 0.0564
+  AN  : 0.0450
+  CPT : 0.0331
+  GM  : 0.0309
+  SXT : 0.0261
